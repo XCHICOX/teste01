@@ -1,0 +1,83 @@
+/* static/styles.css */
+
+/* Define a fonte e o espaçamento básicos */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5; /* Cor de fundo suave */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo do cabeçalho */
+header {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #ffffff; /* Texto branco */
+    padding: 1em;
+    text-align: center;
+}
+
+/* Estilo do conteúdo principal */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Ocupa 80% da altura da viewport */
+    padding: 1em;
+}
+
+/* Estilo do formulário de login */
+form {
+    background-color: #ffffff; /* Fundo branco para o formulário */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 2em;
+    width: 100%;
+    max-width: 400px; /* Largura máxima do formulário */
+}
+
+/* Estilo dos campos do formulário */
+form div {
+    margin-bottom: 1em;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ced4da; /* Cor da borda */
+    border-radius: 4px; /* Cantos arredondados */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+form button {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #ffffff; /* Texto branco */
+    border: none;
+    padding: 0.75em;
+    border-radius: 4px; /* Cantos arredondados */
+    width: 100%;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transição suave */
+}
+
+form button:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+/* Estilo do rodapé */
+footer {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #ffffff; /* Texto branco */
+    padding: 1em;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

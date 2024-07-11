@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <style>
+        .username {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mostra o nome de usuário logado no canto superior direito -->
+    <p class="username">
+        {% if logged_in_user %}
+            Usuário logado: {{ logged_in_user }}
+        {% else %}
+            Nenhum usuário logado
+        {% endif %}
+    </p>
+
+    <div class="home-container" style="display: flex; justify-content: space-around; align-items: center; gap: 180px; padding: 40px;">
+        <div class="card" style="text-align: center;">
+            <a href="{{ url_for('clientes') }}" class="card-link">
+                <img src="{{ url_for('static', filename='icons/adicionar_cliente.png') }}" alt="Clientes" style="width: 120px; height: 120px;">
+                <h2>Clientes</h2>
+            </a>
+        </div>
+        <div class="card" style="text-align: center;">
+            <a href="{{ url_for('veiculos') }}" class="card-link">
+                <img src="{{ url_for('static', filename='icons/adicionar_veiculo.png') }}" alt="Veículos" style="width: 120px; height: 120px;">
+                <h2>Veículos</h2>
+            </a>
+        </div>
+        <div class="card" style="text-align: center;">
+            <a href="{{ url_for('manutencoes') }}" class="card-link">
+                <img src="{{ url_for('static', filename='icons/adicionar_manutencao.png') }}" alt="Manutenções" style="width: 120px; height: 120px;">
+                <h2>Manutenções</h2>
+            </a>
+        </div>
+    </div>
+    
+</body>
+</html>
+{% endblock %}

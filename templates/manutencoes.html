@@ -1,0 +1,181 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenções</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .username {
+            text-align: right;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .actions form {
+            display: inline;
+        }
+
+        .actions form button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .actions form button:hover {
+            background-color: #d32f2f;
+        }
+
+        .actions form input[type="hidden"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Mostra o nome de usuário logado no canto superior direito -->
+        <p class="username">
+            {% if logged_in_user %}
+                Usuário logado: {{ logged_in_user }}
+            {% else %}
+                Nenhum usuário logado
+            {% endif %}
+        </p>
+
+        <h2>Manutenções</h2>
+
+        <form action="{{ url_for('adicionar_manutencao') }}" method="post">
+            <h3>Adicionar Manutenção</h3>
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" required>
+            <br>
+            <label for="placa">Placa do Veículo:</label>
+            <input type="text" id="placa" name="placa" required>
+            <br>
+            <label for="informacoes">Informações:</label>
+            <textarea id="informacoes" name="informacoes" required></textarea>
+            <br>
+            <label for="mecanico">Mecânico:</label>
+            <input type="text" id="mecanico" name="mecanico" required>
+            <br>
+            <label for="valor">Valor:</label>
+            <input type="number" id="valor" name="valor" step="0.01" required>
+            <br>
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <h3>Lista de Manutenções</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Placa do Veículo</th>
+                    <th>Informações</th>
+                    <th>Mecânico</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for manutencao in manutencoes %}
+                <tr>
+                    <td>{{ manutencao.data }}</td>
+                    <td>{{ manutencao.placa }}</td>
+                    <td>{{ manutencao.informacoes }}</td>
+                    <td>{{ manutencao.mecanico }}</td>
+                    <td>{{ manutencao.valor }}</td>
+                    <td class="actions">
+                        <!-- Formulário para editar manutenção -->
+                        <form action="{{ url_for('editar_manutencao') }}" method="post">
+                            <input type="hidden" name="data" value="{{ manutencao.data }}">
+                            <input type="text" name="placa" placeholder="Placa" value="{{ manutencao.placa }}" required>
+                            <input type="text" name="informacoes" placeholder="Informações" value="{{ manutencao.informacoes }}" required>
+                            <input type="text" name="mecanico" placeholder="Mecânico" value="{{ manutencao.mecanico }}" required>
+                            <input type="number" name="valor" placeholder="Valor" value="{{ manutencao.valor }}" step="0.01" required>
+                            <button type="submit">Editar</button>
+                        </form>
+                        <!-- Formulário para excluir manutenção -->
+                        <form action="{{ url_for('excluir_manutencao') }}" method="post">
+                            <input type="hidden" name="data" value="{{ manutencao.data }}">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

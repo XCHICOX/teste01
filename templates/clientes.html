@@ -1,0 +1,122 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .username {
+            text-align: right;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        form {
+            display: inline;
+        }
+
+        form button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background-color: #d32f2f;
+        }
+
+        form input[type="hidden"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Mostra o nome de usuário logado no canto superior direito -->
+        <p class="username">
+            {% if logged_in_user %}
+                Usuário logado: {{ logged_in_user }}
+            {% else %}
+                Nenhum usuário logado
+            {% endif %}
+        </p>
+
+        <h2>Clientes</h2>
+        <form action="{{ url_for('adicionar_cliente') }}" method="post">
+            <!-- Formulário para adicionar cliente -->
+              
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>RG</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Whatsapp</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.nome }}</td>
+                    <td>{{ cliente.rg }}</td>
+                    <td>{{ cliente.endereco }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.whatsapp }}</td>
+                    <td>
+                        <form action="{{ url_for('editar_cliente') }}" method="post">
+                            <!-- Formulário para editar cliente -->
+                        </form>
+                        <form action="{{ url_for('excluir_cliente') }}" method="post">
+                            <input type="hidden" name="rg" value="{{ cliente.rg }}">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

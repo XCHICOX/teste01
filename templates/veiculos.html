@@ -1,0 +1,169 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veículos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .username {
+            text-align: right;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .actions form {
+            display: inline;
+        }
+
+        .actions form button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .actions form button:hover {
+            background-color: #d32f2f;
+        }
+
+        .actions form input[type="hidden"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Mostra o nome de usuário logado no canto superior direito -->
+        <p class="username">
+            {% if logged_in_user %}
+                Usuário logado: {{ logged_in_user }}
+            {% else %}
+                Nenhum usuário logado
+            {% endif %}
+        </p>
+
+        <h2>Veículos</h2>
+
+        <form action="{{ url_for('adicionar_veiculo') }}" method="post">
+            <h3>Adicionar Veículo</h3>
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa" name="placa" required>
+            <br>
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required>
+            <br>
+            <label for="ano">Ano:</label>
+            <input type="text" id="ano" name="ano" required>
+            <br>
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <h3>Lista de Veículos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for veiculo in veiculos %}
+                <tr>
+                    <td>{{ veiculo.placa }}</td>
+                    <td>{{ veiculo.modelo }}</td>
+                    <td>{{ veiculo.ano }}</td>
+                    <td class="actions">
+                        <!-- Formulário para editar veículo -->
+                        <form action="{{ url_for('editar_veiculo') }}" method="post">
+                            <input type="hidden" name="placa" value="{{ veiculo.placa }}">
+                            <input type="text" name="modelo" placeholder="Modelo" value="{{ veiculo.modelo }}" required>
+                            <input type="text" name="ano" placeholder="Ano" value="{{ veiculo.ano }}" required>
+                            <button type="submit">Editar</button>
+                        </form>
+                        <!-- Formulário para excluir veículo -->
+                        <form action="{{ url_for('excluir_veiculo') }}" method="post">
+                            <input type="hidden" name="placa" value="{{ veiculo.placa }}">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}
